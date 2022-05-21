@@ -15,7 +15,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 public class CategoryDriver extends MeanBase {
-    public static class CategoryMapper extends Mapper<LongWritable, Text, Text, IntWritable> implements PersonalityAnalysisConstants {
+    private static class CategoryMapper extends Mapper<LongWritable, Text, Text, IntWritable> implements PersonalityAnalysisConstants {
         private final LocalDate now = LocalDate.now();
 
         private static final Text gold = new Text("Gold");
@@ -91,7 +91,7 @@ public class CategoryDriver extends MeanBase {
         }
     }
 
-    public static class CategoryReducer extends Reducer<Text, IntWritable, Text, Text> {
+    private static class CategoryReducer extends Reducer<Text, IntWritable, Text, Text> {
         public void reduce (
                 Text key,
                 Iterable<IntWritable> values,

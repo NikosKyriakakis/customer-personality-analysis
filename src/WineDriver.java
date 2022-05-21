@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class WineDriver extends MeanBase implements PersonalityAnalysisConstants {
-    public static class WineMapper extends Mapper<LongWritable, Text, TupleWritable, NullWritable> {
+    private static class WineMapper extends Mapper<LongWritable, Text, TupleWritable, NullWritable> {
         private final LocalDate now = LocalDate.now();
 
         public void map (
@@ -31,14 +31,7 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
                 System.out.println(e.getMessage());
                 return;
             }
-//            int temp = Integer.parseInt(tokens[ID]);
-//            if (temp == 6218 || temp == 4478) {
-//                System.out.println(mntWines);
-//                System.out.println(target);
-//                System.out.println(mntWines > target);
-//            } else {
-//                System.out.println("HEREE");
-//            }
+
             if (mntWines > target) {
                 int id, age;
                 double income;
@@ -58,7 +51,7 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
         }
     }
 
-    public static class OrderMapper extends Mapper<LongWritable, Text, IntWritable, TupleWritable> {
+    private static class OrderMapper extends Mapper<LongWritable, Text, IntWritable, TupleWritable> {
         public void map(LongWritable key, Text value, Context context)
                 throws IOException, InterruptedException {
             final LocalDate now = LocalDate.now();
@@ -85,7 +78,7 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
         }
     }
 
-    public static class OrderReducer extends Reducer<IntWritable, TupleWritable, TupleWritable, NullWritable> {
+    private static class OrderReducer extends Reducer<IntWritable, TupleWritable, TupleWritable, NullWritable> {
         public void reduce(IntWritable key, Iterable<TupleWritable> values, Context context)
                 throws IOException, InterruptedException {
             int count = 0;

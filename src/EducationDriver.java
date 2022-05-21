@@ -33,7 +33,7 @@ public class EducationDriver {
         }
     }
 
-    public static class EducationReducer
+    private static class EducationReducer
             extends Reducer<Text, IntWritable, Text, IntWritable>
     {
         public void reduce(Text key, Iterable<IntWritable> values, Context context)

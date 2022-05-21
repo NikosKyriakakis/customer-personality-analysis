@@ -29,7 +29,7 @@ public class MeanBase {
         conf.set(varName, mean[1]);
     }
 
-    public static class MeanMapper
+    private static class MeanMapper
             extends Mapper<LongWritable, Text, IntWritable, MeanWritable> {
         /**
          * Mapper class, aggregates count - sum pairs on the same key
@@ -49,7 +49,7 @@ public class MeanBase {
         }
     }
 
-    public static class MeanReducer
+    private static class MeanReducer
             extends Reducer<IntWritable, MeanWritable, Text, DoubleWritable> {
 
         public void reduce(IntWritable key, Iterable<MeanWritable> values, Context context)
