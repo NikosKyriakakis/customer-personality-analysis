@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class WineDriver extends MeanBase implements PersonalityAnalysisConstants {
-    private static class WineMapper extends Mapper<LongWritable, Text, TupleWritable, NullWritable> {
+    public static class WineMapper extends Mapper<LongWritable, Text, TupleWritable, NullWritable> {
         private final LocalDate now = LocalDate.now();
 
         public void map (
@@ -51,7 +51,7 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
         }
     }
 
-    private static class OrderMapper extends Mapper<LongWritable, Text, IntWritable, TupleWritable> {
+    public static class OrderMapper extends Mapper<LongWritable, Text, IntWritable, TupleWritable> {
         public void map(LongWritable key, Text value, Context context)
                 throws IOException, InterruptedException {
             final LocalDate now = LocalDate.now();
@@ -72,13 +72,13 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
             int id = Integer.parseInt(tokens[ID + 1]);
             int age = Integer.parseInt(tokens[AGE + 1]);
             double income = Double.parseDouble(tokens[INCOME + 1]);
-            age = now.getYear() - age;
+            // age = now.getYear() - age;
             TupleWritable wt = new TupleWritable(id, age, income, mntWines, tokens[EDUCATION + 1], tokens[MARITAL_STATUS + 1]);
             context.write(one, wt);
         }
     }
 
-    private static class OrderReducer extends Reducer<IntWritable, TupleWritable, TupleWritable, NullWritable> {
+    public static class OrderReducer extends Reducer<IntWritable, TupleWritable, TupleWritable, NullWritable> {
         public void reduce(IntWritable key, Iterable<TupleWritable> values, Context context)
                 throws IOException, InterruptedException {
             int count = 0;

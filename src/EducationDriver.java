@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.IOException;
 
 public class EducationDriver {
-    private static class EducationMapper
+    public static class EducationMapper
             extends Mapper<LongWritable, Text, Text, IntWritable>
             implements PersonalityAnalysisConstants
     {
@@ -33,7 +33,7 @@ public class EducationDriver {
         }
     }
 
-    private static class EducationReducer
+    public static class EducationReducer
             extends Reducer<Text, IntWritable, Text, IntWritable>
     {
         public void reduce(Text key, Iterable<IntWritable> values, Context context)
