@@ -101,9 +101,7 @@ public class CategoryDriver extends MeanBase {
                 intValue = Integer.parseInt(value.toString());
                 results.add(intValue);
             }
-
-            System.out.println("\n\n\n\n\nRESULTS : " + results.size() + "\n\n\n\n\n");
-
+            
             Collections.sort(results);
 
             for (int result : results) {
