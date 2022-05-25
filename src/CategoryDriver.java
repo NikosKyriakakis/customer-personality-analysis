@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 public class CategoryDriver extends MeanBase {
     public static class CategoryMapper extends Mapper<LongWritable, Text, Text, IntWritable> implements PersonalityAnalysisConstants {
@@ -24,8 +23,6 @@ public class CategoryDriver extends MeanBase {
         private static final Text silver = new Text("Silver");
         private static final Text bronze = new Text("Bronze");
         private static final Text paper = new Text("Paper");
-
-        private Date current = new Date();
 
         public void map (
                 LongWritable key,
