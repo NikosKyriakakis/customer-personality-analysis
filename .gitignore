@@ -1,3 +1,5 @@
 *_output/
 *.iml
-*.jar
+edu.jar
+wine.jar
+cli_cat.jar
