@@ -43,7 +43,6 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
                     System.out.println(e.getMessage());
                     return;
                 }
-                age = now.getYear() - age;
                 TupleWritable wt = new TupleWritable(id, age, income, mntWines, tokens[EDUCATION], tokens[MARITAL_STATUS]);
                 wt.offset = 0;
                 context.write(wt, NullWritable.get());

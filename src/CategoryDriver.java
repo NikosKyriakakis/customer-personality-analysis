@@ -11,8 +11,10 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 public class CategoryDriver extends MeanBase {
     public static class CategoryMapper extends Mapper<LongWritable, Text, Text, IntWritable> implements PersonalityAnalysisConstants {
@@ -23,14 +25,7 @@ public class CategoryDriver extends MeanBase {
         private static final Text bronze = new Text("Bronze");
         private static final Text paper = new Text("Paper");
 
-        private static LocalDate parseDateFormat(String date) throws NumberFormatException {
-            String[] tokens = date.split("/");
-            tokens[2] = "20" + tokens[2];
-            int MM = Integer.parseInt(tokens[1]);
-            int yyyy = Integer.parseInt(tokens[2]);
-            int dd = Integer.parseInt(tokens[0]);
-            return LocalDate.of(yyyy, MM, dd);
-        }
+        private Date current = new Date();
 
         public void map (
                 LongWritable key,
@@ -62,8 +57,6 @@ public class CategoryDriver extends MeanBase {
                 return;
             }
 
-            LocalDate isoFormatDate = parseDateFormat(tokens[DT_CUSTOMER]);
-            long daysDiff = Math.abs(Duration.between(now.atStartOfDay(), isoFormatDate.atStartOfDay()).toDays());
             double expenses = mntWines + mntFish + mntFruits + mntMeat + mntSweets + mntGold;
 
             IntWritable idWritable = new IntWritable(id);
@@ -71,8 +64,9 @@ public class CategoryDriver extends MeanBase {
             double meanExpenses = Double.parseDouble(context.getConfiguration().get("expenses-mean"));
             double meanIncome = Double.parseDouble(context.getConfiguration().get("income-mean"));
 
-            if (daysDiff <= 365) {
-                if (income > 69500 && expenses > 0.5 * meanExpenses) {
+            String[] dateParts = tokens[DT_CUSTOMER].split("/");
+            if (dateParts[2].equals("21")) {
+                if (income > 69500 && expenses > 1.5 * meanExpenses) {
                     // Gold
                     context.write(gold, idWritable);
                 } else if (income < meanIncome && expenses <= 0.25 * meanExpenses) {
@@ -80,7 +74,7 @@ public class CategoryDriver extends MeanBase {
                     context.write(bronze, idWritable);
                 }
             } else {
-                if (income > 69500 && expenses > 0.5 * meanExpenses) {
+                if (income > 69500 && expenses > 1.5 * meanExpenses) {
                     // Silver
                     context.write(silver, idWritable);
                 } else if (income < meanIncome && expenses < 0.25 * meanExpenses) {
@@ -103,9 +97,20 @@ public class CategoryDriver extends MeanBase {
                 return;
             }
 
+            ArrayList<Integer> results = new ArrayList<>();
+            int intValue;
+
             for (IntWritable value : values) {
-                String val = value.toString() + ", ";
-                line.append(val);
+                intValue = Integer.parseInt(value.toString());
+                results.add(intValue);
+            }
+
+            System.out.println("\n\n\n\n\nRESULTS : " + results.size() + "\n\n\n\n\n");
+
+            Collections.sort(results);
+
+            for (int result : results) {
+                line.append(result).append(", ");
             }
             context.write(new Text("\n" + keyStr), new Text(line.toString()));
         }
