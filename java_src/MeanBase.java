@@ -21,6 +21,10 @@ public class MeanBase {
      */
 
     public void setMean(Configuration conf, String dirPath, String varName) throws IOException {
+        /**
+         * This method is used to load a single
+         * mean value stored from a temporary file
+         */
         Path meanPath = new Path(dirPath);
         FileSystem fs = FileSystem.get(conf);
         FSDataInputStream inputStream = fs.open(meanPath);
@@ -31,11 +35,17 @@ public class MeanBase {
 
     public static class MeanMapper
             extends Mapper<LongWritable, Text, IntWritable, MeanWritable> {
-        /**
-         * Mapper class, aggregates count - sum pairs on the same key
-         */
         private static final IntWritable KEY = new IntWritable(1);
 
+        /**
+         * Mapper class responsible for gathering count-sum pairs in the same
+         * reducer since the operation of mean calculation is algebraic
+         * @param key
+         * @param value
+         * @param context
+         * @throws IOException
+         * @throws InterruptedException
+         */
         public void map(LongWritable key, Text value, Context context)
                 throws IOException, InterruptedException
         {
@@ -51,10 +61,17 @@ public class MeanBase {
 
     public static class MeanReducer
             extends Reducer<IntWritable, MeanWritable, Text, DoubleWritable> {
+        /**
+         * Reducer class which calculates a mean value from pairs of partial counts and sums
+         * @param key: the file offset
+         * @param values: collection of count-sum pairs
+         * @param context
+         * @throws IOException
+         * @throws InterruptedException
+         */
 
         public void reduce(IntWritable key, Iterable<MeanWritable> values, Context context)
-                throws IOException, InterruptedException
-        {
+                throws IOException, InterruptedException {
             double sum = 0, count = 0;
             // Iterate over all values
             for (MeanWritable value : values) {

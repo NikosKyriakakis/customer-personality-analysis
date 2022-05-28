@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.*;
 
 public class CategoryDriver extends MeanBase {
     public static class CategoryMapper extends Mapper<LongWritable, Text, Text, IntWritable> implements PersonalityAnalysisConstants {
@@ -95,18 +96,24 @@ public class CategoryDriver extends MeanBase {
             }
 
             ArrayList<Integer> results = new ArrayList<>();
+            Set<Integer> ts = new TreeSet<>();
             int intValue;
 
             for (IntWritable value : values) {
                 intValue = Integer.parseInt(value.toString());
-                results.add(intValue);
+//                results.add(intValue);
+                ts.add(intValue);
             }
 
-            Collections.sort(results);
+            //Collections.sort(results);//
 
-            for (int result : results) {
-                line.append(result).append(", ");
+            for (int t : ts) {
+                line.append(t + "").append(", ");
             }
+
+//            for (int result : results) {
+//                line.append(result).append(", ");
+//            }
             context.write(new Text("\n" + keyStr), new Text(line.toString()));
         }
     }

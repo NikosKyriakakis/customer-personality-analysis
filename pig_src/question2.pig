@@ -1,4 +1,4 @@
-data = LOAD '../input_data/personality_analysis_clean.csv' USING PigStorage(';');
+data = LOAD '../input.data/personality_analysis_clean.csv' USING PigStorage(';');
 
 targeted_features = foreach data generate (chararray) $0 as ID, 
 				(int) $1 as Age,

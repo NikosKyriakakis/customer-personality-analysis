@@ -1,4 +1,4 @@
-initial_data = LOAD '../input_data/personality_analysis_clean.csv' USING PigStorage(';') AS (	
+initial_data = LOAD '../input.data/personality_analysis_clean.csv' USING PigStorage(';') AS (	
 	ID:int,
 	Age:int,
 	Education:chararray,
