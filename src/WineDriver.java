@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 public class WineDriver extends MeanBase implements PersonalityAnalysisConstants {
     public static class WineMapper extends Mapper<LongWritable, Text, TupleWritable, NullWritable> {
-        private final LocalDate now = LocalDate.now();
 
         public void map (
                 LongWritable key,
@@ -53,7 +52,6 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
     public static class OrderMapper extends Mapper<LongWritable, Text, IntWritable, TupleWritable> {
         public void map(LongWritable key, Text value, Context context)
                 throws IOException, InterruptedException {
-            final LocalDate now = LocalDate.now();
             IntWritable one = new IntWritable(1);
             String line = value.toString();
             String[] tokens = line.split(",");
@@ -71,7 +69,6 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
             int id = Integer.parseInt(tokens[ID + 1]);
             int age = Integer.parseInt(tokens[AGE + 1]);
             double income = Double.parseDouble(tokens[INCOME + 1]);
-            // age = now.getYear() - age;
             TupleWritable wt = new TupleWritable(id, age, income, mntWines, tokens[EDUCATION + 1], tokens[MARITAL_STATUS + 1]);
             context.write(one, wt);
         }
@@ -89,6 +86,8 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
     }
 
     public void run(String[] args) throws Exception {
+        long startTime = System.nanoTime();
+
         Configuration conf = new Configuration();
 
         Job job1 = Job.getInstance(conf, "Partial sums-counts");
@@ -131,5 +130,8 @@ public class WineDriver extends MeanBase implements PersonalityAnalysisConstants
         FileInputFormat.addInputPath(job4, new Path(args[4]));
         FileOutputFormat.setOutputPath(job4, new Path(args[5]));
         job4.waitForCompletion(true);
+
+        long elapsedTime = System.nanoTime() - startTime;
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\nTotal execution time: " + elapsedTime / 1000000 + "ms\n");
     }
 }

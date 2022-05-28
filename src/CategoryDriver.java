@@ -101,7 +101,7 @@ public class CategoryDriver extends MeanBase {
                 intValue = Integer.parseInt(value.toString());
                 results.add(intValue);
             }
-            
+
             Collections.sort(results);
 
             for (int result : results) {
@@ -112,6 +112,8 @@ public class CategoryDriver extends MeanBase {
     }
 
     public void run(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
+        long startTime = System.nanoTime();
+
         Configuration conf = new Configuration();
 
         Job job1 = Job.getInstance(conf, "Income partial sums-counts");
@@ -166,5 +168,8 @@ public class CategoryDriver extends MeanBase {
         FileInputFormat.addInputPath(job5, new Path(args[1]));
         FileOutputFormat.setOutputPath(job5, new Path(args[6]));
         job5.waitForCompletion(true);
+
+        long elapsedTime = System.nanoTime() - startTime;
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\nTotal execution time: " + elapsedTime / 1000000 + "ms\n");
     }
 }

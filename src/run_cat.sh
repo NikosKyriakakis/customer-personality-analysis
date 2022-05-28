@@ -12,4 +12,5 @@ rm -rf ../mean_expenses
 rm -rf ../income_partial
 rm -rf ../expenses_partial
 
-rm 'CategoryDriver$CategoryMapper.class' 'CategoryDriver$CategoryReducer.class' CategoryDriver.class DistributiveExpenseMapper.class DistributiveIncomeMapper.class DistributiveMapper.class DistributiveReducer.class DistributiveWineMapper.class 'EducationDriver$EducationMapper.class' 'EducationDriver$EducationReducer.class' EducationDriver.class Main.class 'MeanBase$MeanMapper.class' 'MeanBase$MeanReducer.class' MeanBase.class MeanWritable.class PersonalityAnalysisConstants.class TupleWritable.class WineDriver.class 'WineDriver$WineMapper.class' 'WineDriver$OrderReducer.class' 'WineDriver$OrderMapper.class'
+rm 'CategoryDriver$CategoryMapper.class' 'CategoryDriver$CategoryReducer.class' CategoryDriver.class DistributiveExpenseMapper.class DistributiveIncomeMapper.class DistributiveMapper.class DistributiveReducer.class DistributiveWineMapper.class 'EducationDriver$EducationMapper.class' 'EducationDriver$EducationReducer.class' EducationDriver.class Main.class 'MeanBase$MeanMapper.class' 'MeanBase$MeanReducer.class' MeanBase.class MeanWritable.class PersonalityAnalysisConstants.class TupleWritable.class 'WineDriver$OrderMapper.class' 'WineDriver$OrderReducer.class' 'WineDriver$WineMapper.class' WineDriver.class
+rm cli_cat.jar

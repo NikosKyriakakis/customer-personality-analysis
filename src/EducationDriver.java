@@ -47,6 +47,8 @@ public class EducationDriver {
     }
 
     public void run(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
+        long startTime = System.nanoTime();
+
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "education level count");
         job.setJarByClass(EducationDriver.class);
@@ -56,6 +58,9 @@ public class EducationDriver {
         job.setOutputValueClass(IntWritable.class);
         FileInputFormat.addInputPath(job, new Path(args[1]));
         FileOutputFormat.setOutputPath(job, new Path(args[2]));
-        System.exit(job.waitForCompletion(true) ? 0 : 1);
+        job.waitForCompletion(true);
+
+        long elapsedTime = System.nanoTime() - startTime;
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\nTotal execution time: " + elapsedTime / 1000000 + "ms\n");
     }
 }

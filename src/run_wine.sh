@@ -8,7 +8,9 @@ echo -e "\n=================== Wine Expenses Output ====================="
 cat ../wine_output/part-r-00000
 echo "=============================================================="
 
-rm 'CategoryDriver$CategoryMapper.class' 'CategoryDriver$CategoryReducer.class' 'WineDriver$OrderMapper.class' 'WineDriver$OrderReducer.class' CategoryDriver.class DistributiveExpenseMapper.class DistributiveIncomeMapper.class DistributiveMapper.class DistributiveReducer.class DistributiveWineMapper.class 'EducationDriver$EducationMapper.class' 'EducationDriver$EducationReducer.class' EducationDriver.class Main.class 'MeanBase$MeanMapper.class' 'MeanBase$MeanReducer.class' MeanBase.class MeanWritable.class PersonalityAnalysisConstants.class TupleWritable.class WineDriver.class 'WineDriver$WineMapper.class'
 rm -rf ../mean_output
 rm -rf ../partial_sums_counts
 rm -rf ../unordered_output
+
+rm 'CategoryDriver$CategoryMapper.class' 'CategoryDriver$CategoryReducer.class' CategoryDriver.class DistributiveExpenseMapper.class DistributiveIncomeMapper.class DistributiveMapper.class DistributiveReducer.class DistributiveWineMapper.class 'EducationDriver$EducationMapper.class' 'EducationDriver$EducationReducer.class' EducationDriver.class Main.class 'MeanBase$MeanMapper.class' 'MeanBase$MeanReducer.class' MeanBase.class MeanWritable.class PersonalityAnalysisConstants.class TupleWritable.class 'WineDriver$OrderMapper.class' 'WineDriver$OrderReducer.class' 'WineDriver$WineMapper.class' WineDriver.class
+rm wine.jar
