@@ -55,8 +55,16 @@ public class CategoryDriver extends MeanBase {
 
             IntWritable idWritable = new IntWritable(id);
 
-            double meanExpenses = Double.parseDouble(context.getConfiguration().get("expenses-mean"));
-            double meanIncome = Double.parseDouble(context.getConfiguration().get("income-mean"));
+            double meanExpenses;
+            double meanIncome;
+
+            try {
+                meanExpenses = Double.parseDouble(context.getConfiguration().get("expenses-mean"));
+                meanIncome = Double.parseDouble(context.getConfiguration().get("income-mean"));
+            } catch(NumberFormatException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
 
             String[] dateParts = tokens[DT_CUSTOMER].split("/");
             if (dateParts[2].equals("21")) {
@@ -103,7 +111,7 @@ public class CategoryDriver extends MeanBase {
                 line += (t + ",");
             }
 
-            context.write(new Text("\n" + keyStr), new Text(line.toString()));
+            context.write(new Text("\n" + keyStr), new Text(line));
         }
     }
 
