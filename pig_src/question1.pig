@@ -1,4 +1,4 @@
-data = LOAD '../input.data/personality_analysis_clean.csv' USING PigStorage(';');
+data = LOAD '../input_data/personality_analysis_clean.csv' USING PigStorage(';');
 
 data = RANK data;
 data = FILTER data BY ($0 > 1);

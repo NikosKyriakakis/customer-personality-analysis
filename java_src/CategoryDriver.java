@@ -11,15 +11,11 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.*;
 
 public class CategoryDriver extends MeanBase {
     public static class CategoryMapper extends Mapper<LongWritable, Text, Text, IntWritable> implements PersonalityAnalysisConstants {
-        private final LocalDate now = LocalDate.now();
-
         private static final Text gold = new Text("Gold");
         private static final Text silver = new Text("Silver");
         private static final Text bronze = new Text("Bronze");
@@ -89,31 +85,24 @@ public class CategoryDriver extends MeanBase {
                 Iterable<IntWritable> values,
                 Context context
         ) throws IOException, InterruptedException {
-            StringBuilder line = new StringBuilder();
+            String line = "";
             String keyStr = key.toString();
             if (keyStr.equals("Bronze") || keyStr.equals("Paper")) {
                 return;
             }
 
-            ArrayList<Integer> results = new ArrayList<>();
             Set<Integer> ts = new TreeSet<>();
             int intValue;
 
             for (IntWritable value : values) {
                 intValue = Integer.parseInt(value.toString());
-//                results.add(intValue);
                 ts.add(intValue);
             }
 
-            //Collections.sort(results);//
-
             for (int t : ts) {
-                line.append(t + "").append(", ");
+                line += (t + ",");
             }
 
-//            for (int result : results) {
-//                line.append(result).append(", ");
-//            }
             context.write(new Text("\n" + keyStr), new Text(line.toString()));
         }
     }
